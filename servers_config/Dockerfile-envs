@@ -4,9 +4,6 @@ MAINTAINER fpwanderley@gmail.com
 ENV EXTRA_PYTHON_PACKAGES Django==1.11.4 ipython
 
 # # ##############################################################
-# # Activating VirtualEnv.(Aparentemente ativar o Virtualenv esta quebrando o pip)
-#RUN python -m venv --without-pip /InfoMeEnv
-#RUN source /InfoMeEnv/bin/activate
 RUN python3.6 -m pip install $EXTRA_PYTHON_PACKAGES
 
 CMD chmod +x InfoMe/start_server.sh && \

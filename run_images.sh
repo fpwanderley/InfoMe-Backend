@@ -3,6 +3,17 @@
 # Script for Running Images.
 # Usage: source run_images.sh -i (dev | review)
 
+# Example: docker run -it -p 8000:8000 --mount --link=postgres type=bind,source=/home/felipe/Projetos/infome/InfoMe-Backend,target=/InfoMe infome-envs:$version /bin/bash
+
+# https://hub.docker.com/_/postgres/
+# How to connect to db_container through Application Container:
+#   psql -h db_container -U postgres
+
+# Remove all non-executin containers:
+#   docker rm $(docker ps -a -q)
+
+
+
 PROJECT_NAME='infome';
 DOCKERFILE='Dockerfile';
 DEV='dev';
@@ -13,10 +24,23 @@ PATH_NAME='InfoMe';
 SOURCE='source=/home/felipe/Projetos/infome/InfoMe-Backend';
 TARGET='target=/$PATH_NAME';
 
+function remove_database_container
+{
+    eval "docker kill db_container";
+    eval "docker rm db_container";
+}
+
+function run_database_container
+{
+    eval "docker run --name db_container -e POSTGRES_PASSWORD=root -d postgres";
+}
+
 function run_image
 {
     echo "Running $PROJECT_NAME-$image:$version docker image";
-    eval "docker run -it -p 8000:8000 --mount $TYPE,$SOURCE,$TARGET $PROJECT_NAME-$image:$version";
+    remove_database_container;
+    run_database_container;
+    eval "docker run -it --link=db_container -p 8000:8000 --mount $TYPE,$SOURCE,$TARGET $PROJECT_NAME-$image:$version ";
 }
 
 # Getting the command arguments.
