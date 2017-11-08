@@ -26,7 +26,7 @@ add-apt-repository \
    $(lsb_release -cs) \
    stable"
 
-# Install Docker CE.
+# Install Docker 17.06 CE.
 apt-get update
 apt-get install -y docker-ce
 

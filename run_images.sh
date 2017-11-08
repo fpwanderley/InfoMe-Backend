@@ -8,11 +8,13 @@
 # https://hub.docker.com/_/postgres/
 # How to connect to db_container through Application Container:
 #   psql -h db_container -U postgres
+# The Postgres Docker Image exposes the port 5432.
 
-# Remove all non-executin containers:
+# Remove all non-executing containers:
 #   docker rm $(docker ps -a -q)
 
-
+# Allowing all files permissions to all users in container:
+#   chmod -R 777 $TARGET
 
 PROJECT_NAME='infome';
 DOCKERFILE='Dockerfile';
@@ -32,7 +34,7 @@ function remove_database_container
 
 function run_database_container
 {
-    eval "docker run --name db_container -e POSTGRES_PASSWORD=root -d postgres";
+    eval "docker run --name db_container -p 5432:5432 -e POSTGRES_PASSWORD=root -d postgres";
 }
 
 function run_image
@@ -40,8 +42,10 @@ function run_image
     echo "Running $PROJECT_NAME-$image:$version docker image";
     remove_database_container;
     run_database_container;
-    eval "docker run -it --link=db_container -p 8000:8000 --mount $TYPE,$SOURCE,$TARGET $PROJECT_NAME-$image:$version ";
+    eval "docker run -it --link=db_container -p 8000:8000 --mount $TYPE,$SOURCE,$TARGET $PROJECT_NAME-$image:$version $command";
 }
+
+command=""
 
 # Getting the command arguments.
 while [ "$1" != "" ]; do
@@ -51,6 +55,9 @@ while [ "$1" != "" ]; do
                                 ;;
         -v | --version )        shift
                                 version="$1"
+                                ;;
+        -c | --command )        shift
+                                command="$1"
                                 ;;
         * )                     usage
                                 exit 1

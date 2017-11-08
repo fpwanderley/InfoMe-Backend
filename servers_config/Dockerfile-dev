@@ -2,9 +2,9 @@ FROM ubuntu:16.04
 MAINTAINER fpwanderley@gmail.com
 # ##############################################################
 
-ENV RUNTIME_PACKAGES software-properties-common vim
+ENV RUNTIME_PACKAGES software-properties-common vim sudo git
 ENV RUNTIME_PACKAGES_2 python3.6 python3-pip
-ENV DATABASE_PACKAGES postgresql-client
+ENV DATABASE_PACKAGES postgresql-client postgis
 
 # Encontrar uma maneira de instalar o PostGresql automaticamente.
 # https://hub.docker.com/_/postgres/
@@ -18,5 +18,3 @@ RUN apt-get update
 RUN apt-get install -y $RUNTIME_PACKAGES_2
 RUN pip3 install --upgrade pip
 RUN echo 'alias python="python3.6"' >> ~/.bashrc
-
-

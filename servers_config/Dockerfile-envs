@@ -1,11 +1,25 @@
 FROM infome-dev:1.0
 MAINTAINER fpwanderley@gmail.com
 # ##############################################################
-ENV EXTRA_PYTHON_PACKAGES Django==1.11.4 ipython
+ENV EXTRA_PYTHON_PACKAGES Django==1.11.4 ipython==6.1.0 psycopg2 django-extensions==1.9.0 djangorestframework==3.6.4
 
 # # ##############################################################
 RUN python3.6 -m pip install $EXTRA_PYTHON_PACKAGES
 
+# # ##############################################################
+# # Useful Commands
+# # ##############################################################
+RUN echo 'alias update_python_libs="python -m pip freeze > /InfoMe/InfoMe/requirements.txt"' >> ~/.bashrc
+RUN echo 'alias requirements="/InfoMe/InfoMe/requirements.txt"' >> ~/.bashrc
+RUN echo 'alias pip_install="python -m pip install -r "' >> ~/.bashrc
+RUN echo 'alias manage="python /InfoMe/InfoMe/manage.py "' >> ~/.bashrc
+RUN echo 'alias runserver="manage runserver 0.0.0.0:8000"' >> ~/.bashrc
+RUN echo 'alias createsuperuser="manage createsuperuser --username infome --email infome@infome.com"' >> ~/.bashrc
+RUN echo 'alias setup_db="source /InfoMe/setup_db.sh"' >> ~/.bashrc
+
+# # #################################################################################
+# # Install all Python Application's Requirements and Turn the Development WebServer.
+# # #################################################################################
 CMD chmod +x InfoMe/start_server.sh && \
     InfoMe/start_server.sh  && \
     /bin/bash
