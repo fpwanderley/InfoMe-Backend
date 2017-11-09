@@ -9,17 +9,20 @@ RUN python3.6 -m pip install $EXTRA_PYTHON_PACKAGES
 # # ##############################################################
 # # Useful Commands
 # # ##############################################################
-RUN echo 'alias update_python_libs="python -m pip freeze > /InfoMe/InfoMe/requirements.txt"' >> ~/.bashrc
-RUN echo 'alias requirements="/InfoMe/InfoMe/requirements.txt"' >> ~/.bashrc
-RUN echo 'alias pip_install="python -m pip install -r "' >> ~/.bashrc
-RUN echo 'alias manage="python /InfoMe/InfoMe/manage.py "' >> ~/.bashrc
+RUN echo 'alias update_python_libs="pip_freeze > /infome/requirements.txt"' >> ~/.bashrc
+RUN echo 'alias requirements="/infome/requirements.txt"' >> ~/.bashrc
+RUN echo 'alias pip_freeze="python3.6 -m pip freeze"' >> ~/.bashrc
+RUN echo 'alias pip_install="python3.6 -m pip install"' >> ~/.bashrc
+RUN echo 'alias pip_install_requirements="python3.6 -m pip install -r /infome/requirements.txt"' >> ~/.bashrc
+RUN echo 'alias manage="python /infome/manage.py "' >> ~/.bashrc
 RUN echo 'alias runserver="manage runserver 0.0.0.0:8000"' >> ~/.bashrc
-RUN echo 'alias createsuperuser="manage createsuperuser --username infome --email infome@infome.com"' >> ~/.bashrc
-RUN echo 'alias setup_db="source /InfoMe/setup_db.sh"' >> ~/.bashrc
+RUN echo 'alias createsuperuser="manage createsuperuser --username admin_user --email infome@infome.com"' >> ~/.bashrc
+RUN echo 'alias setup_db="source /infome/setup_db.sh"' >> ~/.bashrc
+RUN echo 'alias start_server="source /infome/start_server.sh"' >> ~/.bashrc
 
 # # #################################################################################
 # # Install all Python Application's Requirements and Turn the Development WebServer.
 # # #################################################################################
-CMD chmod +x InfoMe/start_server.sh && \
-    InfoMe/start_server.sh  && \
+CMD chmod +x infome/start_server.sh && \
+    infome/start_server.sh  && \
     /bin/bash

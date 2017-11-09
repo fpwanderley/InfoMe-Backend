@@ -22,7 +22,7 @@ DEV='dev';
 ENVS='envs';
 
 TYPE='type=bind';
-PATH_NAME='InfoMe';
+PATH_NAME='infome';
 SOURCE='source=/home/felipe/Projetos/infome/InfoMe-Backend';
 TARGET='target=/$PATH_NAME';
 
