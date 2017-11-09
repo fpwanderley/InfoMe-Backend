@@ -148,10 +148,12 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
 
-
 # DJANGO-CORS-HEADERS
 CORS_ORIGIN_ALLOW_ALL = True
 
 # HEROKU CONFIGURATIONS
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
+
+# WHITENOISE
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
