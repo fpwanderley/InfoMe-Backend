@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from infome.views import schema_view
 from infome.call.urls import call_router
 from infome.hand.urls import hand_router
 
@@ -23,4 +24,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include(call_router.urls)),
     url(r'^api/v1/', include(hand_router.urls)),
+    url(r'^$', schema_view),
 ]
